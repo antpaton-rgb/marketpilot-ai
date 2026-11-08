@@ -11,13 +11,12 @@ APP_NAME = "MarketPilot AI v2"
 PROVIDER = os.getenv("MARKET_DATA_PROVIDER", "twelvedata")
 API_KEY = os.getenv("TWELVEDATA_API_KEY", "")
 SCAN_INTERVAL_SECONDS = 900
-DEFAULT_CAPITAL_EUR = 750.0
-DEFAULT_RISK_PCT = 1.0
-MAX_RISK_PCT = 2.0
+DEFAULT_RISK_PCT = 2.0
+MAX_RISK_PCT = 3.0
 MIN_REWARD_RISK = 1.5
-DAILY_LOSS_LIMIT_PCT = 2.0
-WEEKLY_LOSS_LIMIT_PCT = 4.0
-DRAWDOWN_REVIEW_PCT = 10.0
+DAILY_LOSS_LIMIT_PCT = 5.0
+WEEKLY_LOSS_LIMIT_PCT = 10.0
+DRAWDOWN_REVIEW_PCT = 20.0
 
 app = FastAPI(title=APP_NAME, version="2.1.0")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
