@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1220">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MarketPilot AI">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<title>MarketPilot AI</title>
+<style>
+:root{color-scheme:dark;--bg:#08111f;--panel:#111e30;--panel2:#17263a;--line:#263951;--text:#edf4ff;--muted:#9aadc5;--green:#42d6a0;--red:#ff7180;--gold:#f5c66d;--blue:#75b6ff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#1c3553 0,transparent 55%),var(--bg);color:var(--text);font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+header{position:sticky;top:0;z-index:5;background:#0b1524ed;backdrop-filter:blur(16px);border-bottom:1px solid var(--line);padding:15px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-size:22px;font-weight:850;letter-spacing:-.7px}.brand span{color:var(--green)}.sub{font-size:11px;color:var(--muted);margin-top:3px}.status{font-size:10px;font-weight:800;letter-spacing:.5px;padding:7px 9px;border-radius:30px;background:#29374b;color:var(--gold);white-space:nowrap}.status.ok{background:#123d35;color:var(--green)}.status.err{background:#482632;color:var(--red)}
+main{max-width:1050px;margin:auto;padding:16px 14px 60px}.intro{padding:15px;border:1px solid #5b4a2a;background:linear-gradient(120deg,#332b1c,#1d2632);border-radius:16px;color:#f7dfad;font-size:12px;line-height:1.55;margin-bottom:14px}
+.metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.metric,.panel{background:linear-gradient(145deg,var(--panel),#0f1a2a);border:1px solid var(--line);border-radius:16px}.metric{padding:13px}.metric label{display:block;color:var(--muted);font-size:11px}.metric strong{display:block;font-size:23px;margin-top:5px;letter-spacing:-.5px}.metric small{color:var(--muted);font-size:10px}
+.panel{padding:15px;margin-top:13px}.panel-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}h2{font-size:16px;margin:0;font-weight:800}button,input,select{font:inherit;border-radius:10px;border:1px solid var(--line);padding:11px;background:#0a1524;color:var(--text);min-height:42px}button{background:linear-gradient(135deg,#2877bd,#24558a);border:0;font-weight:800;cursor:pointer}button:disabled{opacity:.55}button.secondary{background:var(--panel2);border:1px solid var(--line)}button.danger{background:#512b37}.controls{display:flex;gap:8px;flex-wrap:wrap}.controls select,.controls input{flex:1;min-width:120px}.hint{color:var(--muted);font-size:11px;line-height:1.5;margin:10px 0 0}
+.signal-list{display:grid;gap:10px}.signal{background:#0b1727;border:1px solid var(--line);border-radius:14px;padding:13px}.signal-top{display:flex;justify-content:space-between;align-items:center;gap:8px}.symbol{font-size:17px;font-weight:850}.name{font-size:11px;color:var(--muted);margin-top:2px}.tag{font-size:10px;font-weight:850;padding:6px 8px;border-radius:20px;background:#26364b;color:var(--gold)}.tag.buy{background:#123d35;color:var(--green)}.tag.watch{background:#493a20;color:var(--gold)}.tag.pass,.tag.no_data{background:#30394a;color:#bdc8d8}.tag.blocked_risk{background:#512b37;color:var(--red)}
+.signal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.datum{background:#142338;border-radius:9px;padding:8px}.datum label{display:block;font-size:9px;color:var(--muted)}.datum b{display:block;font-size:12px;margin-top:4px;overflow-wrap:anywhere}.reason{font-size:11px;color:#bdcce0;line-height:1.45;margin-top:10px}.scorebar{height:5px;background:#26364b;border-radius:5px;margin-top:10px;overflow:hidden}.scorebar i{display:block;height:100%;background:linear-gradient(90deg,#e6b95e,#43d5a0)}
+.two{display:grid;grid-template-columns:1fr;gap:0}.field{display:flex;flex-direction:column;gap:5px;font-size:11px;color:var(--muted);flex:1;min-width:120px}.field input{width:100%;font-size:15px;color:var(--text)}.riskbox{padding:10px;border-radius:10px;background:#0b1727;font-size:11px;color:var(--muted);line-height:1.6;margin-top:10px}.riskbox strong{color:var(--text)}.empty{color:var(--muted);font-size:12px;padding:15px 4px}.foot{text-align:center;color:var(--muted);font-size:10px;line-height:1.6;padding:20px 8px}
+@media(min-width:700px){.metrics{grid-template-columns:repeat(4,1fr)}.two{grid-template-columns:1fr 1fr;gap:13px}.signal-list{grid-template-columns:repeat(2,1fr)}main{padding-top:24px}.metric strong{font-size:27px}}
+</style>
+</head>
+<body>
+<header><div><div class="brand">MarketPilot <span>AI</span></div><div class="sub">GLOBAL MARKETS · LONG ONLY · PAPER TRADING</div></div><div id="conn" class="status">CONECTANDO…</div></header>
+<main>
+<div class="intro"><b>ESTRATEGIA SELECTIVA · VERSIÓN 3</b><br>Buscamos oportunidades de compra con filtros técnicos y una relación beneficio/riesgo mínima de 1,5:1. Esta aplicación trabaja en simulación: no envía órdenes reales ni garantiza resultados. Las señales deben validarse antes de arriesgar dinero.</div>
+<div class="metrics">
+ <div class="metric"><label>Capital virtual</label><strong id="mCapital">750 €</strong><small>Capital de referencia</small></div>
+ <div class="metric"><label>Activos en universo</label><strong id="mAssets">—</strong><small>Acciones · ETF · cripto</small></div>
+ <div class="metric"><label>Señales de compra</label><strong id="mBuys">—</strong><small>En el último análisis</small></div>
+ <div class="metric"><label>Último análisis</label><strong id="mLast" style="font-size:15px">Pendiente</strong><small id="mData">Esperando datos</small></div>
+</div>
+<section class="panel">
+ <div class="panel-head"><h2>Escáner de mercado</h2><button id="scanBtn">Analizar ahora</button></div>
+ <div class="controls"><select id="kind"><option value="all">Todos los activos</option><option value="stock">Acciones</option><option value="etf">ETF</option><option value="crypto">Criptomonedas</option></select><input id="search" placeholder="Buscar activo…"></div>
+ <p class="hint">El análisis consulta los activos configurados en el servidor. El universo actual es una lista inicial, todavía no 100 activos.</p>
+</section>
+<section class="panel"><div class="panel-head"><h2>Oportunidades detectadas</h2><span id="signalCount" class="status">0 señales</span></div><div id="signals" class="signal-list"><div class="empty">Cargando señales del servidor…</div></div></section>
+<div class="two">
+<section class="panel">
+ <h2>Gestión del riesgo</h2><div class="controls" style="margin-top:12px">
+  <label class="field">Capital virtual (€)<input id="capital" type="number" min="100" step="50" value="750"></label>
+  <label class="field">Riesgo por operación (%)<input id="risk" type="number" min=".25" max="2" step=".25" value="1"></label>
+ </div>
+ <button id="save" class="secondary" style="margin-top:10px;width:100%">Guardar configuración</button><div id="cfg" class="hint"></div>
+ <div id="riskState" class="riskbox">Control de riesgo pendiente de datos.</div>
+ <p class="hint">Límites configurados en el servidor: pérdida diaria 2 %, semanal 4 % y drawdown 10 %. Riesgo por operación limitado al 2 %.</p>
+</section>
+<section class="panel">
+ <h2>Registrar operación simulada cerrada</h2><p class="hint">Introduce el resultado neto en euros de una operación de prueba. No registra órdenes reales.</p>
+ <div class="controls" style="margin-top:10px"><label class="field">Resultado neto (€)<input id="pnl" type="number" step=".01" placeholder="Ej. 12.50"></label></div>
+ <label class="field" style="margin-top:9px">Nota<input id="note" maxlength="200" placeholder="Ej. AAPL · salida por objetivo"></label>
+ <button id="closeTrade" class="secondary" style="margin-top:10px;width:100%">Guardar resultado</button><div id="tradeMsg" class="hint"></div>
+</section>
+</div>
+<section class="panel"><h2>Estado y validación</h2><div id="health" class="riskbox">Comprobando conexión…</div><p class="hint">No publicamos un porcentaje de aciertos inventado. Para estimarlo necesitamos histórico, backtesting fuera de muestra, costes, deslizamiento y seguimiento prospectivo. Los datos de operaciones cerradas de esta versión se guardan temporalmente en memoria del servidor y pueden perderse al reiniciarlo.</p></section>
+<div class="foot">MarketPilot AI · Herramienta experimental de análisis y simulación.<br>No constituye asesoramiento financiero. Comprueba siempre la fecha, mercado y divisa de cada cotización.</div>
+</main>
+<script>
+const API='https://marketpilot-ai-e0d0.onrender.com';
+let assets=[],signals=[];
+const $=id=>document.getElementById(id);
+const euro=n=>n==null?'—':new Intl.NumberFormat('es-ES',{style:'currency',currency:'EUR',maximumFractionDigits:2}).format(Number(n));
+const num=(n,d=2)=>n==null?'—':Number(n).toLocaleString('es-ES',{maximumFractionDigits:d});
+function safe(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+async function api(path,opts={}){const r=await fetch(API+path,opts);let data;try{data=await r.json()}catch{data=await r.text()}if(!r.ok)throw Error(typeof data==='string'?data:JSON.stringify(data));return data;}
+function renderSignals(){const k=$('kind').value,q=$('search').value.trim().toLowerCase();let list=signals.filter(s=>{const a=assets.find(x=>x.symbol===s.symbol);return(k==='all'||(a?.asset_type||s.asset_type)===k)&&(!q||String(s.symbol+' '+(a?.name||'')).toLowerCase().includes(q));});$('signalCount').textContent=list.length+' resultados';if(!list.length){$('signals').innerHTML='<div class="empty">No hay señales para estos filtros. Ejecuta un análisis o cambia el filtro.</div>';return;}
+$('signals').innerHTML=list.map(s=>{const status=String(s.status||'NO_DATA').toLowerCase();const a=assets.find(x=>x.symbol===s.symbol);return `<article class="signal"><div class="signal-top"><div><div class="symbol">${safe(s.symbol)}</div><div class="name">${safe(a?.name||s.asset_type||'Activo')}</div></div><span class="tag ${safe(status)}">${safe(s.status||'SIN DATOS')}</span></div><div class="scorebar"><i style="width:${Math.max(0,Math.min(100,Number(s.score)||0))}%"></i></div><div class="signal-grid"><div class="datum"><label>SCORE</label><b>${num(s.score,0)}/100</b></div><div class="datum"><label>PRECIO / ENTRADA</label><b>${num(s.entry??s.close,4)} ${safe(s.quote_currency||'')}</b></div><div class="datum"><label>RSI</label><b>${num(s.rsi)}</b></div><div class="datum"><label>STOP LOSS</label><b>${num(s.stop_loss,4)}</b></div><div class="datum"><label>OBJETIVO</label><b>${num(s.take_profit,4)}</b></div><div class="datum"><label>BENEFICIO / RIESGO</label><b>${s.reward_risk==null?'—':num(s.reward_risk)+':1'}</b></div></div><div class="reason">${safe(s.reason||s.sizing_note||'Sin explicación disponible')}${s.failed_filters?.length?'<br><span style="color:#e6bd72">Pendiente: '+safe(s.failed_filters.join(' · '))+'</span>':''}</div><div class="hint">Datos: ${safe(s.as_of||'fecha no disponible')} · Riesgo teórico: ${s.risk_eur==null?'No calculado (divisa)':euro(s.risk_eur)}</div></article>`}).join('');}
+async function load(){try{const [h,a,s,r]=await Promise.all([api('/health'),api('/api/v1/assets'),api('/api/v1/signals'),api('/api/v1/risk?capital_eur='+encodeURIComponent(+$('capital').value||750))]);assets=a;signals=s;$('conn').textContent='SERVIDOR CONECTADO';$('conn').className='status ok';$('mAssets').textContent=a.length;$('mBuys').textContent=s.filter(x=>x.status==='BUY').length;$('mCapital').textContent=euro(+$('capital').value||750);$('mLast').textContent=h.last_scan?new Date(h.last_scan).toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}):'Pendiente';$('mData').textContent=h.data_status||'Sin datos';$('health').innerHTML=`Versión: <strong>${safe(h.version||'—')}</strong><br>Proveedor: <strong>${safe(h.provider||'—')}</strong><br>Clave del proveedor configurada: <strong>${h.provider_key_configured?'Sí':'No'}</strong><br>Estado de datos: <strong>${safe(h.data_status||'Pendiente')}</strong><br>Frecuencia prevista: <strong>15 minutos</strong><br>Estrategia: <strong>${safe(h.strategy||'LONG_ONLY')}</strong>`;$('riskState').innerHTML=`Estado: <strong style="color:${r.trading_allowed?'var(--green)':'var(--red)'}">${r.trading_allowed?'HABILITADO':'BLOQUEADO'}</strong><br>Capital / equity: <strong>${euro(r.equity_eur)}</strong><br>Pérdida/beneficio diario: <strong>${euro(r.daily_pnl_eur)}</strong> · límite ${euro(r.daily_loss_limit_eur)}<br>Semanal: <strong>${euro(r.weekly_pnl_eur)}</strong> · límite ${euro(r.weekly_loss_limit_eur)}<br>Drawdown: <strong>${num(r.drawdown_pct)} %</strong>${r.blocked_reasons?.length?'<br>'+safe(r.blocked_reasons.join(' · ')):''}`;renderSignals();}catch(e){$('conn').textContent='ERROR DE CONEXIÓN';$('conn').className='status err';$('health').textContent='No se pudo consultar el servidor: '+e.message;}}
+async function scan(){const b=$('scanBtn');const c=+$('capital').value||750,r=+$('risk').value||1;if(c<100||r<.25||r>2){$('cfg').textContent='Capital mínimo 100 € y riesgo entre 0,25 % y 2 %.';return;}b.disabled=true;b.textContent='Analizando universo…';try{const d=await api('/api/v1/scan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({capital_eur:c,risk_pct:r})});signals=d.signals||[];$('mBuys').textContent=signals.filter(x=>x.status==='BUY').length;$('mLast').textContent=new Date(d.last_scan).toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});$('mData').textContent=d.data_status||'Análisis completado';renderSignals();await load();}catch(e){$('cfg').textContent='Error al analizar: '+e.message;}finally{b.disabled=false;b.textContent='Analizar ahora';}}
+$('scanBtn').onclick=scan;$('kind').onchange=renderSignals;$('search').oninput=renderSignals;
+$('save').onclick=()=>{const c=+$('capital').value,r=+$('risk').value;if(c<100||r<.25||r>2){$('cfg').textContent='Revisa los valores: capital mínimo 100 € y riesgo 0,25–2 %.';return;}localStorage.setItem('mp_settings',JSON.stringify({capital:c,risk:r}));$('mCapital').textContent=euro(c);$('cfg').textContent='Configuración guardada en este iPhone. Se aplicará al próximo análisis.';load();};
+$('closeTrade').onclick=async()=>{const pnl=+$('pnl').value;if(!Number.isFinite(pnl)||$('pnl').value===''){$('tradeMsg').textContent='Introduce un resultado numérico.';return;}try{const d=await api('/api/v1/paper-trades/close',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pnl_eur:pnl,capital_eur:+$('capital').value||750,note:$('note').value})});$('tradeMsg').textContent=d.recorded?'Resultado guardado en la sesión del servidor.':'No se pudo guardar.';$('pnl').value='';$('note').value='';await load();}catch(e){$('tradeMsg').textContent='Error: '+e.message;}};
+try{const saved=JSON.parse(localStorage.getItem('mp_settings')||'{}');if(saved.capital)$('capital').value=saved.capital;if(saved.risk)$('risk').value=saved.risk;}catch{}
+if('serviceWorker'in navigator){addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));}
+load();setInterval(load,60000);
+</script>
+</body></html>
